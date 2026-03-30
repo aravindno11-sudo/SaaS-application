@@ -6,6 +6,12 @@ export interface IWorkspace extends Document {
         user: mongoose.Types.ObjectId;
         role: 'owner' | 'admin' | 'member';
     }[];
+    subscription?: {
+        plan: 'free' | 'pro';
+        stripeCustomerId?: string;
+        stripeSubscriptionId?: string;
+        status?: string;
+    };
 }
 declare const _default: mongoose.Model<IWorkspace, {}, {}, {}, mongoose.Document<unknown, {}, IWorkspace, {}, {}> & IWorkspace & Required<{
     _id: mongoose.Types.ObjectId;
