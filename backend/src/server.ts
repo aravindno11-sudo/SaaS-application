@@ -13,11 +13,14 @@ import activityRoutes from './routes/activityRoutes.js';
 const app = express();
 
 app.use(cors({
-  origin: [
-    process.env.CORS_ORIGIN || 'http://localhost:5173',
-    'https://saas-application-eight.vercel.app',
-    /\.vercel\.app$/
-  ],
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (origin.includes('vercel.app') || origin.includes('localhost') || origin === process.env.CORS_ORIGIN) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
