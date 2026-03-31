@@ -7,14 +7,40 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [workspaceName, setWorkspaceName] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
+  const getPasswordStrength = (pass: string) => {
+    if (!pass) return { score: 0, label: '', color: 'bg-neutral-800', max: 0 };
+    let score = 0;
+    if (pass.length >= 6) score += 1;
+    if (pass.length >= 8) score += 1;
+    if (/[A-Z]/.test(pass)) score += 1;
+    if (/[0-9]/.test(pass)) score += 1;
+    if (/[^A-Za-z0-9]/.test(pass)) score += 1;
+
+    if (score <= 2) return { score, label: 'Weak', color: 'bg-red-500', max: 1 };
+    if (score <= 4) return { score, label: 'Medium', color: 'bg-yellow-500', max: 2 };
+    return { score, label: 'Strong', color: 'bg-green-500', max: 3 };
+  };
+
+  const strength = getPasswordStrength(password);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    if (password.length > 16) {
+      setError('Password cannot exceed 16 characters');
+      return;
+    }
     setLoading(true);
     try {
       const { data } = await api.post('/auth/register', { name, email, password, workspaceName });
@@ -75,6 +101,36 @@ const Register = () => {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              maxLength={16}
+              required
+            />
+            {password && (
+              <div className="mt-2">
+                <div className="flex gap-1 h-1.5">
+                  {[1, 2, 3].map((level) => (
+                    <div
+                      key={level}
+                      className={`flex-1 rounded-full transition-all duration-300 ${
+                        level <= strength.max ? strength.color : 'bg-neutral-700'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="text-right text-xs mt-1">
+                  <span className={strength.color.replace('bg-', 'text-')}>{strength.label}</span>
+                </div>
+              </div>
+            )}
+          </div>
+          <div>
+            <label className="block text-neutral-300 text-sm font-medium mb-1.5 ml-1">Confirm Password</label>
+            <input
+              type="password"
+              className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              maxLength={16}
               required
             />
           </div>

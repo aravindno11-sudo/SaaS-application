@@ -1,0 +1,19 @@
+{
+  "status": 204,
+  "headers": {
+    "access-control-allow-credentials": "true",
+    "access-control-allow-headers": "authorization, content-type",
+    "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "access-control-allow-origin": "https://saas-application-4204z9mtir-aravindno11-9202s-projects.vercel.app",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9e4da3caf8ec7f09-MAA",
+    "connection": "keep-alive",
+    "date": "Tue, 31 Mar 2026 07:28:53 GMT",
+    "rndr-id": "cfbe74e7-abc3-41a6",
+    "server": "cloudflare",
+    "vary": "Origin, Access-Control-Request-Headers",
+    "x-powered-by": "Express",
+    "x-render-origin-server": "Render"
+  }
+}

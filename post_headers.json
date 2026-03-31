@@ -1,0 +1,21 @@
+{
+  "status": 500,
+  "headers": {
+    "access-control-allow-credentials": "true",
+    "access-control-allow-origin": "https://saas-application-4204zsomething.vercel.app",
+    "alt-svc": "h3=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "cf-ray": "9e4d98d54b9dc69f-MAA",
+    "connection": "keep-alive",
+    "content-encoding": "br",
+    "content-length": "63",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 31 Mar 2026 07:21:24 GMT",
+    "etag": "W/\"44-BAV5DfWZK10x1h9T3xDyzNFrXN8\"",
+    "rndr-id": "490778d4-ce2d-4b30",
+    "server": "cloudflare",
+    "vary": "Origin, Accept-Encoding",
+    "x-powered-by": "Express",
+    "x-render-origin-server": "Render"
+  }
+}

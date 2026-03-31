@@ -14,6 +14,10 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password, workspaceName } = req.body;
 
+    if (password && password.length > 16) {
+      return res.status(400).json({ message: 'Password must be at most 16 characters long' });
+    }
+
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
