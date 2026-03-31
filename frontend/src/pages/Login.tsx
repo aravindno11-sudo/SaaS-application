@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import api from '../services/api';
 
 const Login = () => {
@@ -8,8 +9,11 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', data.token);
@@ -17,6 +21,8 @@ const Login = () => {
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,9 +68,14 @@ const Login = () => {
           
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white py-3 rounded-xl font-semibold shadow-lg shadow-indigo-500/20 transition-all duration-300 transform active:scale-[0.98]"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white py-3 rounded-xl font-semibold shadow-lg shadow-indigo-500/20 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Sign In
+            {loading ? (
+              <><Loader2 className="animate-spin" size={20} /> Signing In...</>
+            ) : (
+              'Sign In'
+            )}
           </button>
         </form>
 

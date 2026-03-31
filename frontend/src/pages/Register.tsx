@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import api from '../services/api';
 
 const Register = () => {
@@ -10,8 +11,11 @@ const Register = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await api.post('/auth/register', { name, email, password, workspaceName });
       localStorage.setItem('token', data.token);
@@ -19,6 +23,8 @@ const Register = () => {
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,9 +91,14 @@ const Register = () => {
           
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white py-3 mt-4 rounded-xl font-semibold shadow-lg shadow-indigo-500/20 transition-all duration-300 transform active:scale-[0.98]"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white py-3 mt-4 rounded-xl font-semibold shadow-lg shadow-indigo-500/20 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Create Account
+            {loading ? (
+              <><Loader2 className="animate-spin" size={20} /> Creating Account...</>
+            ) : (
+              'Create Account'
+            )}
           </button>
         </form>
 
