@@ -1,6 +1,55 @@
-# SaaS Docs Tool
+# SaaS Docs Tool (MERN Multi-Tenant Platform)
 
 A full-stack, multi-tenant document collaboration platform built with the MERN stack. Supports workspace-based data isolation, role-based access control, subscription-gated premium features, and a mock payment integration for both Stripe and Razorpay.
+
+---
+
+## 🚀 Live Demo
+- **Frontend (Vercel):** [https://saas-application-6w3gyw10o-aravindno11-9202s-projects.vercel.app](https://saas-application-6w3gyw10o-aravindno11-9202s-projects.vercel.app)
+- **Backend API (Render):** `https://saas-application-5.onrender.com/api`
+
+*(Test credentials: You can register a new account or use any mock email/password)*
+
+---
+
+## 🛠️ Getting Started (Local Development)
+
+### Prerequisites
+- Node.js (v18+)
+- MongoDB Atlas URI or Local MongoDB instance
+
+### 1. Backend Setup
+```bash
+cd backend
+npm install
+```
+Create a `.env` file in the `backend` directory:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+FRONTEND_URL=http://localhost:5173
+STRIPE_SECRET_KEY=sk_test_placeholder
+STRIPE_WEBHOOK_SECRET=whsec_placeholder
+```
+Start the backend server:
+```bash
+npm run dev
+```
+
+### 2. Frontend Setup
+```bash
+cd frontend
+npm install
+```
+Create a `.env` file in the `frontend` directory:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+Start the frontend dev server:
+```bash
+npm run dev
+```
 
 ---
 
