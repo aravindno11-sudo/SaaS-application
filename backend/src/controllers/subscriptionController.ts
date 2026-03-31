@@ -15,12 +15,14 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Workspace not found' });
     }
 
+    const frontendUrl = req.headers.origin || process.env.FRONTEND_URL || 'http://localhost:5173';
+
     // Mock Mode for testing with placeholder keys
     if (process.env.STRIPE_SECRET_KEY === 'sk_test_placeholder' || !process.env.STRIPE_SECRET_KEY) {
       console.log('Stripe Mock Mode: Redirecting to Mock Checkout UI');
       return res.json({ 
         id: 'mock_session_id', 
-        url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/mock-checkout?session_id=mock_session_id` 
+        url: `${frontendUrl}/mock-checkout?session_id=mock_session_id` 
       });
     }
 
@@ -41,8 +43,8 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
         },
       ],
       mode: 'subscription',
-      success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/pricing`,
+      success_url: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendUrl}/pricing`,
       metadata: {
         workspaceId: workspaceId.toString(),
       },
