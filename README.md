@@ -5,7 +5,7 @@ A full-stack, multi-tenant document collaboration platform built with the MERN s
 ---
 
 ## 🚀 Live Demo
-- **Frontend (Vercel):** [https://saas-application-6w3gyw10o-aravindno11-9202s-projects.vercel.app](https://saas-application-6w3gyw10o-aravindno11-9202s-projects.vercel.app)
+- **Frontend (Vercel):** [https://saa-s-application-eight.vercel.app](https://saa-s-application-eight.vercel.app)
 - **Backend API (Render):** `https://saas-application-5.onrender.com/api`
 
 *(Test credentials: You can register a new account or use any mock email/password)*
