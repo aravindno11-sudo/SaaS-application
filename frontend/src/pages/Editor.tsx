@@ -137,11 +137,11 @@ const Editor = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Editor Header */}
-      <header className="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
-        <div className="flex items-center gap-4">
+      <header className="px-4 md:px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10 gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-4 flex-1">
           <button 
             onClick={() => navigate('/')}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-gray-600"
+            className="p-1 md:p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-gray-600 flex-shrink-0"
           >
             <ArrowLeft size={20} />
           </button>
@@ -150,7 +150,7 @@ const Editor = () => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="text-lg font-bold text-gray-900 border-none focus:ring-0 p-0 placeholder-gray-300 w-96 shadow-none"
+              className="text-base md:text-lg font-bold text-gray-900 border-none focus:ring-0 p-0 placeholder-gray-300 w-full max-w-[120px] sm:max-w-xs md:max-w-96 shadow-none bg-transparent"
               placeholder="Document Title"
             />
             <div className="flex items-center gap-2 text-xs text-gray-400">
@@ -205,14 +205,14 @@ const Editor = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="bg-indigo-50 border border-indigo-100 p-4 rounded-2xl flex items-center justify-between">
-              <div className="flex items-center gap-3 text-indigo-700">
-                <AlertTriangle size={20} />
+            <div className="bg-indigo-50 border border-indigo-100 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start sm:items-center gap-3 text-indigo-700">
+                <AlertTriangle size={20} className="mt-0.5 sm:mt-0 flex-shrink-0" />
                 <span className="text-sm font-medium">You are using the Basic editor. Upgrade to **Pro** for Rich Text features!</span>
               </div>
               <button 
                 onClick={() => navigate('/pricing')}
-                className="text-xs font-bold bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-all"
+                className="text-xs font-bold bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all w-full sm:w-auto"
               >
                 Upgrade
               </button>

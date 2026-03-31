@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import api, { activity } from '../services/api';
-import { FileText, Plus, Search, Calendar, Users, Activity as ActivityIcon, Clock, Layout } from 'lucide-react';
+import { FileText, Plus, Search, Calendar, Users, Activity as ActivityIcon, Clock, Layout, Menu } from 'lucide-react';
 
 interface Document {
   _id: string;
@@ -42,6 +42,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,15 +105,24 @@ const Dashboard = () => {
           setSelectedWorkspaceName(ws.name);
           setUserRole(ws.userRole);
           setActivePlan(ws.subscription?.plan || 'free');
+          setIsSidebarOpen(false);
         }} 
         activeWorkspaceId={selectedWorkspaceId} 
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <h1 className="font-bold text-xl text-gray-900 truncate max-w-[200px]">
+        <header className="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3 md:gap-4">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-lg flex-shrink-0"
+            >
+              <Menu size={24} />
+            </button>
+            <h1 className="font-bold text-lg md:text-xl text-gray-900 truncate max-w-[120px] sm:max-w-[200px]">
               {selectedWorkspaceName || 'Dashboard'}
             </h1>
             {activePlan === 'pro' && (
@@ -133,15 +143,15 @@ const Dashboard = () => {
           </div>
           <button
             onClick={handleCreateDoc}
-            className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 font-bold active:scale-[0.98]"
+            className="flex items-center gap-2 bg-indigo-600 text-white px-3 md:px-5 py-2 md:py-2.5 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 font-bold active:scale-[0.98] text-sm md:text-base flex-shrink-0"
           >
             <Plus size={18} />
-            New Document
+            <span className="hidden sm:inline">New Document</span>
           </button>
         </header>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto px-4 py-6 md:p-8">
           {!selectedWorkspaceId ? (
             <div className="h-full flex flex-col items-center justify-center text-center max-w-md mx-auto">
               <div className="bg-indigo-100 p-6 rounded-3xl text-indigo-600 mb-6">

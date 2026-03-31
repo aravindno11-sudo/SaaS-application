@@ -17,9 +17,11 @@ interface Workspace {
 interface SidebarProps {
   onWorkspaceSelect: (ws: Workspace) => void;
   activeWorkspaceId?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onWorkspaceSelect, activeWorkspaceId }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onWorkspaceSelect, activeWorkspaceId, isOpen, onClose }) => {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -92,13 +94,20 @@ const Sidebar: React.FC<SidebarProps> = ({ onWorkspaceSelect, activeWorkspaceId 
   };
 
   return (
-    <div className="w-64 bg-slate-900 h-screen text-slate-300 flex flex-col border-r border-slate-800 shrink-0">
-      <div className="p-6 flex items-center gap-3 border-b border-slate-800">
-        <div className="bg-indigo-500 p-2 rounded-lg text-white">
-          <Layout size={20} />
+    <>
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={onClose}
+        />
+      )}
+      <div className={`fixed inset-y-0 left-0 z-50 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-slate-900 h-screen text-slate-300 flex flex-col border-r border-slate-800 shrink-0`}>
+        <div className="p-6 flex items-center gap-3 border-b border-slate-800">
+          <div className="bg-indigo-500 p-2 rounded-lg text-white">
+            <Layout size={20} />
+          </div>
+          <h1 className="font-bold text-white text-lg tracking-tight">SaaS Docs</h1>
         </div>
-        <h1 className="font-bold text-white text-lg tracking-tight">SaaS Docs</h1>
-      </div>
 
       <div className="flex-1 overflow-y-auto py-4">
         <div className="px-4 mb-4">
@@ -251,7 +260,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onWorkspaceSelect, activeWorkspaceId 
         </div>
       </Modal>
     </div>
+  </>
   );
 };
 export default Sidebar;
-
